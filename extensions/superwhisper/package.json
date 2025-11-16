@@ -28,7 +28,17 @@
       "subtitle": "superwhisper",
       "description": "Search through your recording history",
       "mode": "view",
-      "icon": "superwhisper-light-icon.png"
+      "icon": "superwhisper-light-icon.png",
+      "preferences": [
+        {
+          "name": "recordingsDir",
+          "title": "Recordings Directory",
+          "description": "Directory where Superwhisper stores recordings",
+          "type": "directory",
+          "required": false,
+          "default": "~/Documents/superwhisper/recordings"
+        }
+      ]
     },
     {
       "name": "select-mode",

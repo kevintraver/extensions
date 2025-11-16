@@ -51,15 +51,16 @@ export function useRecordings() {
     error,
   } = useCachedPromise(
     async () => {
+      const { recordingsDir } = getPreferenceValues<Preferences.SearchHistory>();
       const isInstalled = await isSuperwhisperInstalled();
       if (!isInstalled) {
         throw new Error("Superwhisper is not installed");
       }
 
-      const recordingsPath = join(homedir(), "Documents", "superwhisper", "recordings");
+      const recordingsPath = recordingsDir;
 
       if (!existsSync(recordingsPath)) {
-        throw new Error("Recording directory not found. Please make a recording first.");
+        throw new Error(`Recording directory not found: ${recordingsPath}. Please make a recording first.`);
       }
 
       const directories = readdirSync(recordingsPath)
@@ -73,17 +74,27 @@ export function useRecordings() {
         throw new Error("No recordings found. Please make a recording first.");
       }
 
-      const recordingsList = directories.map((directory) => {
-        const metaPath = join(directory.path, "meta.json");
-        const meta = JSON.parse(readFileSync(metaPath, "utf-8"));
-        const stats = statSync(metaPath);
+      const recordingsList = directories
+        .map((directory) => {
+          try {
+            const metaPath = join(directory.path, "meta.json");
+            const meta = JSON.parse(readFileSync(metaPath, "utf-8"));
+            const stats = statSync(metaPath);
 
-        return {
-          directory: directory.dir,
-          meta,
-          timestamp: stats.mtime,
-        };
-      });
+            return {
+              directory: directory.dir,
+              meta,
+              timestamp: stats.mtime,
+            };
+          } catch (error) {
+            return null;
+          }
+        })
+        .filter((recording) => recording !== null);
+
+      if (recordingsList.length === 0) {
+        throw new Error("No valid recordings found. Some recording folders may be incomplete.");
+      }
 
       recordingsList.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
       return recordingsList;

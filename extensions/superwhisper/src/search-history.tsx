@@ -1,10 +1,11 @@
-import { List, ActionPanel, Action, Icon, Color } from "@raycast/api";
+import { List, ActionPanel, Action, Icon, Color, getPreferenceValues } from "@raycast/api";
 import { homedir } from "os";
 import { join } from "path";
 import { format } from "date-fns";
 import { useRecordings } from "./hooks";
 
 export default function Command() {
+  const { recordingsDir } = getPreferenceValues<Preferences.SearchHistory>();
   const { recordings, isLoading, error } = useRecordings();
 
   if (error) {
@@ -69,7 +70,7 @@ ${recording.meta.llmResult}`
               )}
               <Action.ShowInFinder
                 title="Show in Finder"
-                path={join(homedir(), "Documents", "superwhisper", "recordings", recording.directory)}
+                path={join(recordingsDir, recording.directory)}
                 shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
               />
             </ActionPanel>
