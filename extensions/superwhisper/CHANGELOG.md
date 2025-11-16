@@ -1,5 +1,12 @@
 # superwhisper Changelog
 
+## [Enhanced Search History] - 2025-11-16
+
+- Add configurable recordings directory preference to support custom paths
+- Implement substring search that searches anywhere in recording content
+- Add error handling to gracefully skip incomplete recordings
+- Improve search to work with both raw and LLM-processed results
+
 ## [Added Search History] - 2025-04-27
 
 ## [Improvements to select mode] - 2024-07-09
