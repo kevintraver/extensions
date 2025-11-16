@@ -4,7 +4,6 @@ import { isSuperwhisperInstalled } from "./utils";
 import { readdirSync, readFileSync, existsSync, statSync } from "fs";
 import { Mode } from "./select-mode";
 import { getPreferenceValues } from "@raycast/api";
-import { homedir } from "os";
 import { join } from "path";
 
 export function useModes() {

@@ -1,6 +1,5 @@
 import { List, ActionPanel, Action, Icon, Color, getPreferenceValues } from "@raycast/api";
 import { useState, useMemo } from "react";
-import { homedir } from "os";
 import { join } from "path";
 import { format } from "date-fns";
 import { useRecordings } from "./hooks";
