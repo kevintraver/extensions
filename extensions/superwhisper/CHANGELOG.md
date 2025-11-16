@@ -1,6 +1,6 @@
 # superwhisper Changelog
 
-## [Enhanced Search History] - 2025-11-16
+## [Added Search History] - {PR_MERGE_DATE}
 
 - Add configurable recordings directory preference to support custom paths
 - Implement substring search that searches anywhere in recording content
