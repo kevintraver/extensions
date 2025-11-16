@@ -1,4 +1,5 @@
 import { List, ActionPanel, Action, Icon, Color, getPreferenceValues } from "@raycast/api";
+import { useState, useMemo } from "react";
 import { homedir } from "os";
 import { join } from "path";
 import { format } from "date-fns";
@@ -7,6 +8,19 @@ import { useRecordings } from "./hooks";
 export default function Command() {
   const { recordingsDir } = getPreferenceValues<Preferences.SearchHistory>();
   const { recordings, isLoading, error } = useRecordings();
+  const [searchText, setSearchText] = useState("");
+
+  const filteredRecordings = useMemo(() => {
+    if (!searchText || !recordings) return recordings;
+
+    const searchLower = searchText.toLowerCase();
+    return recordings.filter((recording) => {
+      const rawResult = recording.meta.rawResult?.toLowerCase() || "";
+      const llmResult = recording.meta.llmResult?.toLowerCase() || "";
+
+      return rawResult.includes(searchLower) || llmResult.includes(searchLower);
+    });
+  }, [recordings, searchText]);
 
   if (error) {
     return (
@@ -21,8 +35,16 @@ export default function Command() {
   }
 
   return (
-    <List isLoading={isLoading} isShowingDetail>
-      {recordings?.map((recording) => (
+    <List
+      isLoading={isLoading}
+      isShowingDetail
+      searchBarPlaceholder="Search recordings..."
+      searchText={searchText}
+      onSearchTextChange={setSearchText}
+      filtering={false}
+      throttle
+    >
+      {filteredRecordings?.map((recording) => (
         <List.Item
           key={recording.directory}
           icon={Icon.Document}
