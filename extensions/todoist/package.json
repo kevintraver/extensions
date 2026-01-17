@@ -272,6 +272,48 @@
       "description": "When a task is chosen as the focused one, you can open it directly using this command.",
       "mode": "no-view",
       "disabledByDefault": true
+    },
+    {
+      "name": "inbox",
+      "title": "Inbox",
+      "subtitle": "Todoist",
+      "description": "Show your Todoist inbox tasks.",
+      "mode": "view",
+      "disabledByDefault": true
+    },
+    {
+      "name": "today",
+      "title": "Today",
+      "subtitle": "Todoist",
+      "description": "Show your Todoist tasks due today.",
+      "mode": "view",
+      "disabledByDefault": true,
+      "preferences": [
+        {
+          "name": "showOverdueTasks",
+          "type": "checkbox",
+          "label": "Show overdue tasks",
+          "description": "When enabled, overdue tasks will be shown alongside today's tasks.",
+          "default": true,
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "upcoming",
+      "title": "Upcoming",
+      "subtitle": "Todoist",
+      "description": "Show your upcoming Todoist tasks.",
+      "mode": "view",
+      "disabledByDefault": true
+    },
+    {
+      "name": "overdue",
+      "title": "Overdue",
+      "subtitle": "Todoist",
+      "description": "Show your overdue Todoist tasks.",
+      "mode": "view",
+      "disabledByDefault": true
     }
   ],
   "tools": [

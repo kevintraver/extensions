@@ -1,3 +1,4 @@
+import { parseISO } from "date-fns";
 import { useMemo } from "react";
 
 import { groupByDates } from "../helpers/groupBy";
@@ -9,16 +10,32 @@ import useViewTasks from "../hooks/useViewTasks";
 import TaskListSections from "./TaskListSections";
 import TodayEmptyView from "./TodayEmptyView";
 
-type TodayTasksProps = { quickLinkView: QuickLinkView };
+type TodayTasksProps = { quickLinkView: QuickLinkView; showOverdue?: boolean };
 
-export default function TodayTasks({ quickLinkView }: TodayTasksProps) {
+export default function TodayTasks({ quickLinkView, showOverdue = true }: TodayTasksProps) {
   const [data] = useCachedData();
 
   const tasks = useMemo(() => {
     if (!data) return [];
 
-    return getTasksForTodayView(data.items, data.user.id);
-  }, [data]);
+    const allTasks = getTasksForTodayView(data.items, data.user.id);
+
+    if (showOverdue) {
+      return allTasks;
+    }
+
+    // Filter out overdue tasks, only show tasks due today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return allTasks.filter((task) => {
+      if (!task.due) return false;
+      const taskDate = parseISO(task.due.date);
+      const taskDateMidnight = new Date(taskDate);
+      taskDateMidnight.setHours(0, 0, 0, 0);
+      return taskDateMidnight.getTime() === today.getTime();
+    });
+  }, [data, showOverdue]);
 
   let sections = [];
 
