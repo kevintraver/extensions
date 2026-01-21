@@ -1,3 +1,4 @@
+import { find } from "linkifyjs";
 import { parseISO } from "date-fns";
 
 import { Task } from "../api";
@@ -18,6 +19,12 @@ export function getTaskUrl(id: string) {
 
 export function getTaskAppUrl(id: string) {
   return `todoist://task?id=${id}`;
+}
+
+export function extractUrlFromContent(content: string): string | null {
+  const links = find(content);
+  const match = links.find((link) => link.type === "url");
+  return match?.href ?? null;
 }
 
 export function getTasksForUpcomingView(tasks: Task[], userId: string) {

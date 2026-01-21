@@ -37,7 +37,7 @@ import { refreshMenuBarCommand } from "../helpers/menu-bar";
 import { getPriorityIcon, priorities } from "../helpers/priorities";
 import { getProjectIcon } from "../helpers/projects";
 import { displayReminderName } from "../helpers/reminders";
-import { ViewMode, getTaskAppUrl, getTaskUrl } from "../helpers/tasks";
+import { ViewMode, extractUrlFromContent, getTaskAppUrl, getTaskUrl } from "../helpers/tasks";
 import { QuickLinkView } from "../home";
 import { useFocusedTask } from "../hooks/useFocusedTask";
 import { ViewProps } from "../hooks/useViewTasks";
@@ -221,6 +221,14 @@ export default function TaskActions({
     <>
       <Action title="Complete Task" icon={Icon.Checkmark} onAction={() => completeTask(task)} />
       <OpenInTodoist appUrl={getTaskAppUrl(task.id)} webUrl={getTaskUrl(task.id)} />
+      {extractUrlFromContent(task.content) && (
+        <Action.OpenInBrowser
+          title="Open URL from Task"
+          url={extractUrlFromContent(task.content)!}
+          icon={Icon.Link}
+          shortcut={{ modifiers: ["cmd"], key: "u" }}
+        />
+      )}
       <ActionPanel.Section>
         {focusedTask.id !== task.id ? (
           <Action
