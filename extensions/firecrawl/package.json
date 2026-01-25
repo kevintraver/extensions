@@ -29,6 +29,30 @@
       "title": "Generate LLMs.txt",
       "description": "Generate LLMs.txt from a webpage",
       "mode": "view"
+    },
+    {
+      "name": "crawl-website",
+      "title": "Crawl Website",
+      "description": "Crawl a website and get markdown content",
+      "mode": "view"
+    },
+    {
+      "name": "scrape-url",
+      "title": "Scrape URL",
+      "description": "Scrape a single URL and get markdown content",
+      "mode": "view"
+    },
+    {
+      "name": "recent-crawls",
+      "title": "Recent Crawls",
+      "description": "View recent website crawls and their results",
+      "mode": "view"
+    },
+    {
+      "name": "recent-scrapes",
+      "title": "Recent Scrapes",
+      "description": "View recent page scrapes and their results",
+      "mode": "view"
     }
   ],
   "tools": [
