@@ -235,6 +235,17 @@
       ]
     },
     {
+      "name": "search-same-app-windows",
+      "title": "Search App Windows",
+      "subtitle": "Yabai",
+      "description": "Search and focus windows of the current application",
+      "mode": "view",
+      "keywords": [
+        "app",
+        "window"
+      ]
+    },
+    {
       "name": "focus-next-same-app",
       "title": "Focus Next Window of Same App",
       "subtitle": "Yabai",
